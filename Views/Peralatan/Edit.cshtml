@@ -1,0 +1,130 @@
+@* Views/Peralatan/Edit.cshtml *@
+@model AparWebAdmin.Models.Peralatan
+
+@{
+    ViewData["Title"] = "Edit Peralatan";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">Edit Peralatan: @Model.Kode</h3>
+                    <a href="@Url.Action("QR", new { id = Model.Id })" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-qrcode"></i> Lihat QR Code
+                    </a>
+                </div>
+                
+                <form asp-action="Edit" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="TokenQR" />
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="Kode" class="form-label">
+                                        Kode Peralatan <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Kode" class="form-control" />
+                                    <span asp-validation-for="Kode" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Kode harus unik dan tidak boleh sama
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="JenisId" class="form-label">
+                                        Jenis Peralatan <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="JenisId" class="form-select">
+                                        <option value="">-- Pilih Jenis Peralatan --</option>
+                                        @if (ViewBag.JenisList != null)
+                                        {
+                                            @foreach (var jenis in ViewBag.JenisList as List<AparWebAdmin.Models.DropdownItem>)
+                                            {
+                                                <option value="@jenis.Id" selected="@(jenis.Id == Model.JenisId)">@jenis.Nama</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="JenisId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="LokasiId" class="form-label">
+                                        Lokasi <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="LokasiId" class="form-select">
+                                        <option value="">-- Pilih Lokasi --</option>
+                                        @if (ViewBag.LokasiList != null)
+                                        {
+                                            @foreach (var lokasi in ViewBag.LokasiList as List<AparWebAdmin.Models.DropdownItem>)
+                                            {
+                                                <option value="@lokasi.Id" selected="@(lokasi.Id == Model.LokasiId)">@lokasi.Nama</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="LokasiId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label asp-for="Spesifikasi" class="form-label">
+                                        Spesifikasi <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea asp-for="Spesifikasi" class="form-control" rows="4"></textarea>
+                                    <span asp-validation-for="Spesifikasi" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Jelaskan detail spesifikasi peralatan (maksimal 500 karakter)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <strong>Perhatian:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>QR Code tidak akan berubah saat melakukan edit</li>
+                                        <li>Mengubah jenis peralatan akan mempengaruhi interval pemeriksaan</li>
+                                        <li>Mengubah lokasi akan mempengaruhi assignment petugas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,86 @@
+@* Views/Petugas/Edit.cshtml *@
+@model AparWebAdmin.Models.Petugas
+
+@{
+    ViewData["Title"] = "Edit Petugas";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Petugas: @Model.BadgeNumber</h3>
+                </div>
+                
+                <form asp-action="Edit" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="BadgeNumber" class="form-label">
+                                        Badge Number <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="BadgeNumber" class="form-control" />
+                                    <span asp-validation-for="BadgeNumber" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Badge Number harus unik dan tidak boleh sama
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Role" class="form-label">
+                                        Role <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="Role" class="form-select">
+                                        <option value="">-- Pilih Role --</option>
+                                        @foreach (var role in ViewBag.Roles as List<string>)
+                                        {
+                                            <option value="@role" selected="@(role == Model.Role)">@role</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <strong>Perhatian:</strong> Mengubah role petugas akan mempengaruhi 
+                                    hak akses dan tanggung jawab dalam sistem.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

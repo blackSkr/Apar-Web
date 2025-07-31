@@ -1,0 +1,57 @@
+@* Views/Shared/_Pagination.cshtml *@
+@model PaginationViewModel
+
+<div class="pagination-container">
+    <div class="pagination-info">
+        Showing <strong>@Model.StartItem-@Model.EndItem</strong> of <strong>@Model.TotalItems</strong> @Model.ItemName
+    </div>
+    
+    <nav aria-label="@Model.ItemName pagination">
+        <ul class="pagination">
+            <!-- Previous Button -->
+            <li>
+                <a href="@Model.PreviousPageUrl" 
+                   class="page-btn @(Model.HasPreviousPage ? "" : "disabled")" 
+                   data-page="prev">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            </li>
+            
+            <!-- Page Numbers -->
+            @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+            {
+                <li>
+                    <a href="@Model.GetPageUrl(i)" 
+                       class="page-btn @(i == Model.CurrentPage ? "active" : "")" 
+                       data-page="@i">
+                        @i
+                    </a>
+                </li>
+            }
+            
+            <!-- Ellipsis for gap -->
+            @if (Model.EndPage < Model.TotalPages - 1)
+            {
+                <li>
+                    <span class="page-btn disabled">...</span>
+                </li>
+                <li>
+                    <a href="@Model.GetPageUrl(Model.TotalPages)" 
+                       class="page-btn" 
+                       data-page="@Model.TotalPages">
+                        @Model.TotalPages
+                    </a>
+                </li>
+            }
+            
+            <!-- Next Button -->
+            <li>
+                <a href="@Model.NextPageUrl" 
+                   class="page-btn @(Model.HasNextPage ? "" : "disabled")" 
+                   data-page="next">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,80 @@
+@* Views/Lokasi/Create.cshtml *@
+@model AparWebAdmin.Models.Lokasi
+
+@{
+    ViewData["Title"] = "Tambah Lokasi";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Lokasi Baru</h3>
+                </div>
+                
+                <form asp-action="Create" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Nama" class="form-label">Nama Lokasi <span class="text-danger">*</span></label>
+                                    <input asp-for="Nama" class="form-control" placeholder="Contoh: Gedung A Lantai 1" />
+                                    <span asp-validation-for="Nama" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="BadgeNumberPIC" class="form-label">Badge Number PIC</label>
+                                    <input asp-for="BadgeNumberPIC" class="form-control" placeholder="Contoh: EMP001" />
+                                    <span asp-validation-for="BadgeNumberPIC" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Lat" class="form-label">Latitude</label>
+                                    <input asp-for="Lat" class="form-control" step="any" placeholder="Contoh: -1.2345678" />
+                                    <span asp-validation-for="Lat" class="text-danger"></span>
+                                    <small class="form-text text-muted">Format: -1.2345678</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Long" class="form-label">Longitude</label>
+                                    <input asp-for="Long" class="form-control" step="any" placeholder="Contoh: 116.1234567" />
+                                    <span asp-validation-for="Long" class="text-danger"></span>
+                                    <small class="form-text text-muted">Format: 116.1234567</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

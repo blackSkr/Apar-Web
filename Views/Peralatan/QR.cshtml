@@ -1,0 +1,275 @@
+@* Views/Peralatan/QR.cshtml - Enhanced Version *@
+@model AparWebAdmin.Models.QRCodeResponse
+
+@{
+    ViewData["Title"] = $"QR Code - {Model.Kode}";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3 class="card-title mb-0">QR Code Professional</h3>
+                    <p class="mb-0">Equipment: <strong>@Model.Kode</strong></p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <!-- QR Code Display Section -->
+                        <div class="col-md-8">
+                            <div class="row">
+                                <!-- Main QR Code -->
+                                <div class="col-md-6 text-center">
+                                    <h5 class="text-primary">Scan Ready QR Code</h5>
+                                    <div class="qr-main-container mb-3">
+                                        <img id="mainQR" src="@Model.QrUrl" alt="QR Code @Model.Kode" 
+                                             class="img-fluid border border-3 border-primary rounded shadow" 
+                                             style="max-width: 280px; background: white; padding: 10px;" />
+                                    </div>
+                                    
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-success" onclick="downloadQR('medium')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="printProfessionalQR()">
+                                            <i class="fas fa-print"></i> Print Label
+                                        </button>
+                                        <button type="button" class="btn btn-info" onclick="testScan()">
+                                            <i class="fas fa-mobile-alt"></i> Test Scan
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Size Options -->
+                                <div class="col-md-6">
+                                    <h5 class="text-primary">Quality Options</h5>
+                                    <div class="size-options">
+                                        <div class="mb-3">
+                                            <label class="form-label">QR Code Size:</label>
+                                            <select id="sizeSelect" class="form-select" onchange="changeQRSize()">
+                                                <option value="small">Small (200x200) - Mobile Display</option>
+                                                <option value="medium" selected>Medium (300x300) - Standard</option>
+                                                <option value="large">Large (400x400) - High Quality</option>
+                                                <option value="print">Print (500x500) - Professional</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Error Correction:</label>
+                                            <select id="eccSelect" class="form-select" onchange="changeQRSize()">
+                                                <option value="L">Low (7%) - Faster Scan</option>
+                                                <option value="M" selected>Medium (15%) - Balanced</option>
+                                                <option value="Q">Quartile (25%) - Reliable</option>
+                                                <option value="H">High (30%) - Most Reliable</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <small>
+                                                <strong>Recommendations:</strong><br>
+                                                • <strong>Medium/High ECC</strong> untuk environment kotor<br>
+                                                • <strong>Large size</strong> untuk jarak scan jauh<br>
+                                                • <strong>Print quality</strong> untuk sticker fisik
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- QR Data & Metadata -->
+                        <div class="col-md-4">
+                            <h5 class="text-primary">QR Code Information</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <table class="table table-sm table-borderless">
+                                        <tr>
+                                            <td><strong>Equipment:</strong></td>
+                                            <td>@Model.Kode</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Token:</strong></td>
+                                            <td>
+                                                <small class="font-monospace">@Model.TokenQR</small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Format:</strong></td>
+                                            <td>JSON Structure</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Scan Data:</strong></td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                                        onclick="showQRData()">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <h6 class="text-success">✅ Mobile App Integration</h6>
+                                <ul class="small text-muted">
+                                    <li>Equipment identification</li>
+                                    <li>Auto-load checklist</li>
+                                    <li>Location tracking</li>
+                                    <li>Maintenance history</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Professional Print Layout Preview -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-primary">Professional Label Preview</h5>
+                            <div class="print-preview border rounded p-3 bg-light">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3 text-center">
+                                        <img src="@Model.QrUrl" alt="QR Preview" style="width: 120px; height: 120px;">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h6 class="mb-1">Equipment QR Code</h6>
+                                        <table class="table table-sm table-borderless">
+                                            <tr><td><strong>Code:</strong></td><td>@Model.Kode</td></tr>
+                                            <tr><td><strong>Type:</strong></td><td>Fire Safety Equipment</td></tr>
+                                            <tr><td><strong>Location:</strong></td><td>Building A - Floor 1</td></tr>
+                                            <tr><td><strong>Scan:</strong></td><td>Point camera at QR code to inspect</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Index")" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Equipment
+                        </a>
+                        <div>
+                            <a href="@Url.Action("Edit", new { id = ViewContext.RouteData.Values["id"] })" 
+                               class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Edit Equipment
+                            </a>
+                            <button type="button" class="btn btn-success" onclick="generateBatch()">
+                                <i class="fas fa-clone"></i> Batch Generate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QR Data Modal -->
+<div class="modal fade" id="qrDataModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">QR Code Scan Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="qrDataContent" class="bg-light p-3 rounded"></pre>
+                <div class="mt-3">
+                    <button type="button" class="btn btn-outline-secondary" onclick="copyQRData()">
+                        <i class="fas fa-copy"></i> Copy JSON Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const qrData = @Html.Raw(Json.Serialize(Model.QrData));
+        const baseUrl = 'https://api.qrserver.com/v1/create-qr-code/';
+        const kode = '@Model.Kode';
+
+        function changeQRSize() {
+            const size = document.getElementById('sizeSelect').value;
+            const ecc = document.getElementById('eccSelect').value;
+
+            const sizes = {
+                small: '200x200',
+                medium: '300x300',
+                large: '400x400',
+                print: '500x500'
+            };
+
+            const encodedData = encodeURIComponent(qrData);
+            const newUrl = `${baseUrl}?size=${sizes[size]}&ecc=${ecc}&format=png&qzone=2&data=${encodedData}`;
+
+            document.getElementById('mainQR').src = newUrl;
+        }
+
+        function downloadQR(size) {
+            const sizes = { small: '200x200', medium: '300x300', large: '400x400', print: '500x500' };
+            const encodedData = encodeURIComponent(qrData);
+            const url = `${baseUrl}?size=${sizes[size]}&ecc=H&format=png&data=${encodedData}`;
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `QR_${kode}_${size}.png`;
+            link.click();
+        }
+
+        function showQRData() {
+            document.getElementById('qrDataContent').textContent = JSON.stringify(JSON.parse(qrData), null, 2);
+            new bootstrap.Modal(document.getElementById('qrDataModal')).show();
+        }
+
+        function copyQRData() {
+            navigator.clipboard.writeText(qrData).then(() => {
+                alert('QR Data copied to clipboard!');
+            });
+        }
+
+        function testScan() {
+            alert('QR Code Testing:\n\n1. Use mobile QR scanner app\n2. Point camera at QR code\n3. Should decode JSON data with equipment info\n4. Check if mobile app can process the data format');
+        }
+
+        function printProfessionalQR() {
+            const qrSrc = document.getElementById('mainQR').src;
+            const content = `
+                <div style="font-family: Arial; text-align: center; padding: 20px;">
+                    <h2>Equipment QR Code</h2>
+                    <div style="border: 2px solid #000; padding: 20px; margin: 20px auto; display: inline-block;">
+                        <img src="${qrSrc}" style="width: 300px; height: 300px;">
+                        <h3>${kode}</h3>
+                        <p>Scan for Equipment Information</p>
+                        <small>Generated: ${new Date().toLocaleDateString()}</small>
+                    </div>
+                </div>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head><title>QR Label - ${kode}</title></head>
+                    <body>
+                        ${content}
+                        <script>
+                            window.onload = function() { window.print(); }
+                        <\/script>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        function generateBatch() {
+            alert('Batch Generation:\n\nFeature untuk generate multiple QR codes sekaligus\n- Bulk print labels\n- Export to PDF\n- Batch download\n\nComing soon!');
+        }
+    </script>
+}

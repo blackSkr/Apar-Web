@@ -1,0 +1,92 @@
+@* Views/Petugas/Create.cshtml *@
+@model AparWebAdmin.Models.Petugas
+
+@{
+    ViewData["Title"] = "Tambah Petugas";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Petugas Baru</h3>
+                </div>
+                
+                <form asp-action="Create" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="BadgeNumber" class="form-label">
+                                        Badge Number <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="BadgeNumber" class="form-control" 
+                                           placeholder="Contoh: EMP001, TEC-042, dll" />
+                                    <span asp-validation-for="BadgeNumber" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Badge Number harus unik dan tidak boleh sama
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Role" class="form-label">
+                                        Role <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="Role" class="form-select">
+                                        <option value="">-- Pilih Role --</option>
+                                        @foreach (var role in ViewBag.Roles as List<string>)
+                                        {
+                                            <option value="@role">@role</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Info Role:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li><strong>Supervisor:</strong> Mengawasi tim dan memvalidasi hasil</li>
+                                        <li><strong>Technician:</strong> Melakukan maintenance dan perbaikan</li>
+                                        <li><strong>Inspector:</strong> Melakukan inspeksi rutin</li>
+                                        <li><strong>Operator:</strong> Mengoperasikan peralatan</li>
+                                        <li><strong>Maintenance Staff:</strong> Staff pemeliharaan</li>
+                                        <li><strong>Safety Officer:</strong> Petugas keselamatan</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,84 @@
+@* Views/JenisPeralatan/FormEdit.cshtml *@
+@model AparWebAdmin.Models.JenisPeralatan
+
+@{
+    ViewData["Title"] = "Edit Jenis Peralatan";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Jenis Peralatan: @Model.Nama</h3>
+                </div>
+                
+                <form asp-action="Edit" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Nama" class="form-label">
+                                        Nama Jenis Peralatan <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Nama" class="form-control" />
+                                    <span asp-validation-for="Nama" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="IntervalPemeriksaanBulan" class="form-label">
+                                        Interval Pemeriksaan <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input asp-for="IntervalPemeriksaanBulan" class="form-control" 
+                                               type="number" min="1" max="60" />
+                                        <span class="input-group-text">Bulan</span>
+                                    </div>
+                                    <span asp-validation-for="IntervalPemeriksaanBulan" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Interval pemeriksaan rutin (1-60 bulan)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <strong>Perhatian:</strong> Mengubah interval pemeriksaan akan mempengaruhi 
+                                    jadwal maintenance semua peralatan dengan jenis ini.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

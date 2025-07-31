@@ -1,0 +1,123 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = AparWebAdmin
+build_property.RootNamespace = AparWebAdmin
+build_property.ProjectDir = D:\AparWebAdmin\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\AparWebAdmin
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/AparWebAdmin/Views/Checklist/Bulk.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tsaXN0XEJ1bGsuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Checklist/ByJenis.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tsaXN0XEJ5SmVuaXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Checklist/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tsaXN0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Checklist/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tsaXN0XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Checklist/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tsaXN0XGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/JenisPeralatan/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmVuaXNQZXJhbGF0YW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/JenisPeralatan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmVuaXNQZXJhbGF0YW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/JenisPeralatan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmVuaXNQZXJhbGF0YW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Lokasi/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYXNpXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Lokasi/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYXNpXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Lokasi/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYXNpXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Peralatan/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyYWxhdGFuXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Peralatan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyYWxhdGFuXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Peralatan/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyYWxhdGFuXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Peralatan/QR.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyYWxhdGFuXFFSLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Petugas/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Petugas/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Petugas/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc1xpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Shared/_Pagination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdpbmF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AparWebAdmin/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-uuvgqc73ns

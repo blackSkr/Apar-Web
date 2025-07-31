@@ -1,0 +1,175 @@
+@* Views/Peralatan/Create.cshtml *@
+@model AparWebAdmin.Models.Peralatan
+
+@{
+    ViewData["Title"] = "Tambah Peralatan";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Peralatan Baru</h3>
+                </div>
+                
+                <form asp-action="Create" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="Kode" class="form-label">
+                                        Kode Peralatan <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Kode" class="form-control" 
+                                           placeholder="Contoh: APAR-001, FE-GDA-01" />
+                                    <span asp-validation-for="Kode" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Kode harus unik dan tidak boleh sama
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="JenisId" class="form-label">
+                                        Jenis Peralatan <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="JenisId" class="form-select" id="jenisSelect">
+                                        <option value="">-- Pilih Jenis Peralatan --</option>
+                                        @if (ViewBag.JenisList != null)
+                                        {
+                                            @foreach (var jenis in ViewBag.JenisList as List<AparWebAdmin.Models.DropdownItem>)
+                                            {
+                                                <option value="@jenis.Id">@jenis.Nama</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="JenisId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="LokasiId" class="form-label">
+                                        Lokasi <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="LokasiId" class="form-select" id="lokasiSelect">
+                                        <option value="">-- Pilih Lokasi --</option>
+                                        @if (ViewBag.LokasiList != null)
+                                        {
+                                            @foreach (var lokasi in ViewBag.LokasiList as List<AparWebAdmin.Models.DropdownItem>)
+                                            {
+                                                <option value="@lokasi.Id">@lokasi.Nama</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="LokasiId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label asp-for="Spesifikasi" class="form-label">
+                                        Spesifikasi <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea asp-for="Spesifikasi" class="form-control" rows="4" 
+                                              placeholder="Contoh: APAR Powder ABC 6kg, Fire Extinguisher CO2 5kg, dll"></textarea>
+                                    <span asp-validation-for="Spesifikasi" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Jelaskan detail spesifikasi peralatan (maksimal 500 karakter)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Info:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>QR Code akan otomatis dibuat saat peralatan disimpan</li>
+                                        <li>Interval pemeriksaan mengikuti jenis peralatan yang dipilih</li>
+                                        <li>Pastikan kode peralatan mudah diidentifikasi</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (ViewBag.JenisList == null || ((List<AparWebAdmin.Models.DropdownItem>)ViewBag.JenisList).Count == 0)
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Perhatian:</strong> Belum ada data Jenis Peralatan. 
+                                <a href="@Url.Action("Index", "JenisPeralatan")" class="alert-link">Tambah Jenis Peralatan</a> terlebih dahulu.
+                            </div>
+                        }
+
+                        @if (ViewBag.LokasiList == null || ((List<AparWebAdmin.Models.DropdownItem>)ViewBag.LokasiList).Count == 0)
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Perhatian:</strong> Belum ada data Lokasi. 
+                                <a href="@Url.Action("Index", "Lokasi")" class="alert-link">Tambah Lokasi</a> terlebih dahulu.
+                            </div>
+                        }
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan & Generate QR
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Auto-generate kode suggestion
+        document.getElementById('jenisSelect').addEventListener('change', function() {
+            const jenisText = this.options[this.selectedIndex].text;
+            const lokasiSelect = document.getElementById('lokasiSelect');
+            const kodeInput = document.querySelector('input[name="Kode"]');
+            
+            if (this.value && lokasiSelect.value && !kodeInput.value) {
+                const lokasiText = lokasiSelect.options[lokasiSelect.selectedIndex].text;
+                const jenisCode = jenisText.substring(0, 4).toUpperCase();
+                const lokasiCode = lokasiText.substring(0, 3).toUpperCase();
+                const randomNum = Math.floor(Math.random() * 999) + 1;
+                kodeInput.value = `${jenisCode}-${lokasiCode}-${randomNum.toString().padStart(3, '0')}`;
+            }
+        });
+        
+        document.getElementById('lokasiSelect').addEventListener('change', function() {
+            const jenisSelect = document.getElementById('jenisSelect');
+            const kodeInput = document.querySelector('input[name="Kode"]');
+            
+            if (this.value && jenisSelect.value && !kodeInput.value) {
+                const jenisText = jenisSelect.options[jenisSelect.selectedIndex].text;
+                const lokasiText = this.options[this.selectedIndex].text;
+                const jenisCode = jenisText.substring(0, 4).toUpperCase();
+                const lokasiCode = lokasiText.substring(0, 3).toUpperCase();
+                const randomNum = Math.floor(Math.random() * 999) + 1;
+                kodeInput.value = `${jenisCode}-${lokasiCode}-${randomNum.toString().padStart(3, '0')}`;
+            }
+        });
+    </script>
+}
