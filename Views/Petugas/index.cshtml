@@ -42,44 +42,70 @@
                     {
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th width="80">ID</th>
-                                        <th width="200">Badge Number</th>
-                                        <th>Role</th>
-                                        <th width="120">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.Id</td>
-                                            <td>
-                                                <span class="badge bg-secondary">
-                                                    @item.BadgeNumber
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-@(GetRoleBadgeColor(item.Role))">
-                                                    @item.Role
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a href="@Url.Action("Edit", new { id = item.Id })" 
-                                                       class="btn btn-sm btn-warning">
-                                                        Edit
-                                                    </a>
-                                                    <button type="button" class="btn btn-sm btn-danger" 
-                                                            onclick="confirmDelete(@item.Id, '@item.BadgeNumber')">
-                                                        Hapus
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
+<!-- Update table headers dan body di Views/Petugas/Index.cshtml -->
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Badge Number</th>
+        <th>Role</th>
+        <th>Interval</th>
+        <th>Location</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>#@item.Id</td>
+            <td>
+                <div class="staff-info">
+                    <div class="staff-badge">@item.BadgeNumber</div>
+                </div>
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Role))
+                {
+                    <span class="badge bg-info">@item.Role</span>
+                }
+                else
+                {
+                    <span class="text-muted">No role assigned</span>
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.IntervalNama))
+                {
+                    <span class="badge bg-success">@item.IntervalNama</span>
+                }
+                else
+                {
+                    <span class="text-muted">No interval</span>
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.LokasiNama))
+                {
+                    <i class="bi bi-geo-alt text-primary me-1"></i>@item.LokasiNama
+                }
+                else
+                {
+                    <span class="text-muted">No location</span>
+                }
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(@item.Id, '@item.BadgeNumber')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
                             </table>
                         </div>
                     }

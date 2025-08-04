@@ -1,4 +1,3 @@
-@* Views/Peralatan/QR.cshtml - Enhanced Version *@
 @model AparWebAdmin.Models.QRCodeResponse
 
 @{
@@ -23,8 +22,11 @@
                                 <div class="col-md-6 text-center">
                                     <h5 class="text-primary">Scan Ready QR Code</h5>
                                     <div class="qr-main-container mb-3">
-                                        <img id="mainQR" src="@Model.QrUrl" alt="QR Code @Model.Kode" 
-                                             class="img-fluid border border-3 border-primary rounded shadow" 
+                                        <!-- kosongkan src dulu, nanti diisi oleh JS -->
+                                        <img id="mainQR"
+                                             src=""
+                                             alt="QR Code @Model.Kode"
+                                             class="img-fluid border border-3 border-primary rounded shadow"
                                              style="max-width: 280px; background: white; padding: 10px;" />
                                     </div>
                                     
@@ -132,7 +134,8 @@
                             <div class="print-preview border rounded p-3 bg-light">
                                 <div class="row align-items-center">
                                     <div class="col-md-3 text-center">
-                                        <img src="@Model.QrUrl" alt="QR Preview" style="width: 120px; height: 120px;">
+                                        <!-- preview juga diisi oleh JS -->
+                                        <img id="printPreviewQR" src="" alt="QR Preview" style="width: 120px; height: 120px;">
                                     </div>
                                     <div class="col-md-9">
                                         <h6 class="mb-1">Equipment QR Code</h6>
@@ -192,41 +195,55 @@
 
 @section Scripts {
     <script>
-        const qrData = @Html.Raw(Json.Serialize(Model.QrData));
+        // ambil data JSON dari model
+        const qrData  = @Html.Raw(Json.Serialize(Model.QrData));
+        // nanti kalau base URL berubah, ganti di sini saja:
         const baseUrl = 'https://api.qrserver.com/v1/create-qr-code/';
-        const kode = '@Model.Kode';
+        const kode    = '@Model.Kode';
+
+        // langsung generate QR medium on load
+        document.addEventListener('DOMContentLoaded', changeQRSize);
 
         function changeQRSize() {
-            const size = document.getElementById('sizeSelect').value;
-            const ecc = document.getElementById('eccSelect').value;
-
             const sizes = {
                 small: '200x200',
                 medium: '300x300',
                 large: '400x400',
                 print: '500x500'
             };
+            const size = sizes[document.getElementById('sizeSelect').value];
+            const ecc  = document.getElementById('eccSelect').value;
 
-            const encodedData = encodeURIComponent(qrData);
-            const newUrl = `${baseUrl}?size=${sizes[size]}&ecc=${ecc}&format=png&qzone=2&data=${encodedData}`;
+            const url = `${baseUrl}?size=${size}`
+                      + `&ecc=${ecc}`
+                      + `&format=png&qzone=2`
+                      + `&data=${encodeURIComponent(qrData)}`;
 
-            document.getElementById('mainQR').src = newUrl;
+            document.getElementById('mainQR').src           = url;
+            document.getElementById('printPreviewQR').src   = url;
         }
 
-        function downloadQR(size) {
-            const sizes = { small: '200x200', medium: '300x300', large: '400x400', print: '500x500' };
-            const encodedData = encodeURIComponent(qrData);
-            const url = `${baseUrl}?size=${sizes[size]}&ecc=H&format=png&data=${encodedData}`;
+        function downloadQR(sizeKey) {
+            const sizes = { small:'200x200', medium:'300x300', large:'400x400', print:'500x500' };
+            const url = `${baseUrl}?size=${sizes[sizeKey]}`
+                      + `&ecc=H&format=png&qzone=2`
+                      + `&data=${encodeURIComponent(qrData)}`;
 
             const link = document.createElement('a');
-            link.href = url;
-            link.download = `QR_${kode}_${size}.png`;
+            link.href        = url;
+            link.download    = `QR_${kode}_${sizeKey}.png`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
 
         function showQRData() {
-            document.getElementById('qrDataContent').textContent = JSON.stringify(JSON.parse(qrData), null, 2);
-            new bootstrap.Modal(document.getElementById('qrDataModal')).show();
+            document.getElementById('qrDataContent').textContent =
+                JSON.stringify(JSON.parse(qrData), null, 2);
+            new bootstrap.Modal(
+               document.getElementById('qrDataModal')
+            ).show();
         }
 
         function copyQRData() {
@@ -236,40 +253,25 @@
         }
 
         function testScan() {
-            alert('QR Code Testing:\n\n1. Use mobile QR scanner app\n2. Point camera at QR code\n3. Should decode JSON data with equipment info\n4. Check if mobile app can process the data format');
+            alert('Arahkan kamera ke QR untuk decode JSON data.');
         }
 
         function printProfessionalQR() {
             const qrSrc = document.getElementById('mainQR').src;
             const content = `
-                <div style="font-family: Arial; text-align: center; padding: 20px;">
-                    <h2>Equipment QR Code</h2>
-                    <div style="border: 2px solid #000; padding: 20px; margin: 20px auto; display: inline-block;">
-                        <img src="${qrSrc}" style="width: 300px; height: 300px;">
-                        <h3>${kode}</h3>
-                        <p>Scan for Equipment Information</p>
-                        <small>Generated: ${new Date().toLocaleDateString()}</small>
-                    </div>
-                </div>
-            `;
-
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                    <head><title>QR Label - ${kode}</title></head>
-                    <body>
-                        ${content}
-                        <script>
-                            window.onload = function() { window.print(); }
-                        <\/script>
-                    </body>
-                </html>
-            `);
-            printWindow.document.close();
+                <div style="text-align:center;font-family:Arial;">
+                  <h2>${kode}</h2>
+                  <img src="${qrSrc}" style="width:300px;height:300px;">
+                  <p>Scan untuk info lengkap</p>
+                  <small>Generated: ${new Date().toLocaleString()}</small>
+                </div>`;
+            const win = window.open('', '_blank');
+            win.document.write(content + '<script>window.onload=()=>window.print()<\\/script>');
+            win.document.close();
         }
 
         function generateBatch() {
-            alert('Batch Generation:\n\nFeature untuk generate multiple QR codes sekaligus\n- Bulk print labels\n- Export to PDF\n- Batch download\n\nComing soon!');
+            alert('Fitur batch generate\nComing soon…');
         }
     </script>
 }

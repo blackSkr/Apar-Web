@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AparWebAdmin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b58537635b53c545d952aef6a662dbd66f19a54d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AparWebAdmin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AparWebAdmin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

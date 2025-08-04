@@ -1,4 +1,3 @@
-@* Views/Petugas/Edit.cshtml *@
 @model AparWebAdmin.Models.Petugas
 
 @{
@@ -7,7 +6,7 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Edit Petugas: @Model.BadgeNumber</h3>
@@ -38,18 +37,31 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <!-- Role -->
                                 <div class="mb-3">
                                     <label asp-for="Role" class="form-label">
                                         Role <span class="text-danger">*</span>
                                     </label>
-                                    <select asp-for="Role" class="form-select">
+                                    <select asp-for="Role" class="form-select" asp-items="ViewBag.Roles">
                                         <option value="">-- Pilih Role --</option>
-                                        @foreach (var role in ViewBag.Roles as List<string>)
-                                        {
-                                            <option value="@role" selected="@(role == Model.Role)">@role</option>
-                                        }
                                     </select>
                                     <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                                <!-- Interval -->
+                                <div class="mb-3">
+                                    <label asp-for="IntervalPetugasId" class="form-label">Interval Petugas</label>
+                                    <select asp-for="IntervalPetugasId" class="form-select" asp-items="ViewBag.IntervalList">
+                                        <option value="">-- Pilih Interval --</option>
+                                    </select>
+                                    <span asp-validation-for="IntervalPetugasId" class="text-danger"></span>
+                                </div>
+                                <!-- Lokasi -->
+                                <div class="mb-3">
+                                    <label asp-for="LokasiId" class="form-label">Lokasi</label>
+                                    <select asp-for="LokasiId" class="form-select" asp-items="ViewBag.LokasiList">
+                                        <option value="">-- Pilih Lokasi --</option>
+                                    </select>
+                                    <span asp-validation-for="LokasiId" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +70,12 @@
                             <div class="col-12">
                                 <div class="alert alert-warning">
                                     <i class="fas fa-exclamation-triangle"></i>
-                                    <strong>Perhatian:</strong> Mengubah role petugas akan mempengaruhi 
-                                    hak akses dan tanggung jawab dalam sistem.
+                                    <strong>Perhatian:</strong> 
+                                    <ul class="mb-0 mt-2">
+                                        <li>Mengubah role petugas akan mempengaruhi hak akses dan tanggung jawab dalam sistem</li>
+                                        <li>Mengubah interval dan lokasi akan mempengaruhi jadwal inspeksi petugas</li>
+                                        <li>Pastikan semua perubahan sudah sesuai dengan kebijakan perusahaan</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -70,9 +86,14 @@
                             <a href="@Url.Action("Index")" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Kembali
                             </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Update
-                            </button>
+                            <div>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="resetForm()">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Update Petugas
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -80,6 +101,14 @@
         </div>
     </div>
 </div>
+
+<script>
+function resetForm() {
+    if (confirm('Apakah Anda yakin ingin mereset form? Semua perubahan akan hilang.')) {
+        location.reload();
+    }
+}
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

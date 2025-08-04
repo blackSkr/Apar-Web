@@ -4,62 +4,91 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AparWebAdmin</title>
+
+    <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AparWebAdmin.styles.css" asp-append-version="true" />
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --bs-primary: #D50000;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .navbar .nav-link {
+            transition: color 0.2s ease-in-out;
+        }
+        .navbar .nav-link:hover {
+            color: #ffcccc !important;
+        }
+        footer {
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light text-dark">
+
+    <!-- Navbar -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AparWebAdmin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                                        <!-- Update dropdown Master Data -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Master Data
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-controller="Lokasi" asp-action="Index">Lokasi</a></li>
-                        <li><a class="dropdown-item" asp-controller="JenisPeralatan" asp-action="Index">Jenis Peralatan</a></li>
-                        <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">Petugas</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" asp-controller="Peralatan" asp-action="Index">
-                            <i class="fas fa-tools"></i> Peralatan
-                        </a></li>
-                        <li><a class="dropdown-item" asp-controller="Checklist" asp-action="Index">
-                            <i class="fas fa-clipboard-check"></i> Checklist Management
-                        </a></li>
-                    </ul>
-                </li>
+                        <!-- Master Data Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Master Data
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Lokasi" asp-action="Index">Lokasi</a></li>
+                                <li><a class="dropdown-item" asp-controller="JenisPeralatan" asp-action="Index">Jenis Peralatan</a></li>
+                                <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">Petugas</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-controller="Peralatan" asp-action="Index">🛠 Peralatan</a></li>
+                                <li><a class="dropdown-item" asp-controller="Checklist" asp-action="Index">📋 Checklist Management</a></li>
+                                        <li><a class="dropdown-item" asp-controller="IntervalPetugas" asp-action="Index">
+                                    <i class="bi bi-clock-history me-2 text-warning"></i>Staff Intervals
+                                </a></li>
+                                <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">
+                                    <i class="bi bi-people me-2 text-success"></i>Staff
+                                </a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <!-- Main Content -->
+    <div class="container my-4 flex-grow-1">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - AparWebAdmin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Footer -->
+    <footer class="bg-white border-top mt-auto py-3">
+        <div class="container text-center text-muted">
+            &copy; 2025 - AparWebAdmin -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

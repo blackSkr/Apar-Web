@@ -1,0 +1,309 @@
+@* Views/IntervalPetugas/Create.cshtml *@
+@model AparWebAdmin.Models.IntervalPetugas
+
+@{
+    ViewData["Title"] = "Create Interval";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="bi bi-plus-circle me-2"></i>Create New Interval
+                    </h3>
+                    <p class="text-muted mb-0">Set up inspection intervals for staff assignments</p>
+                </div>
+                
+                <form asp-action="Create" method="post">
+                    <div class="card-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger alert-modern">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-4">
+                                    <label asp-for="NamaInterval" class="form-label">
+                                        <i class="bi bi-tag me-1"></i>
+                                        Interval Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="NamaInterval" class="form-control form-control-lg" 
+                                           placeholder="e.g., Monthly, Quarterly, Semi-Annual..." />
+                                    <span asp-validation-for="NamaInterval" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        Give this interval a descriptive name that staff will understand
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label asp-for="Bulan" class="form-label">
+                                        <i class="bi bi-calendar2-range me-1"></i>
+                                        Interval (Months) <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="Bulan" class="form-select form-select-lg" id="bulanSelect">
+                                        <option value="">-- Select Interval --</option>
+                                        <option value="0">Custom/Flexible (0)</option>
+                                        <option value="1">Monthly (1 month)</option>
+                                        <option value="2">Bi-Monthly (2 months)</option>
+                                        <option value="3">Quarterly (3 months)</option>
+                                        <option value="4">Tri-Annual (4 months)</option>
+                                        <option value="6">Semi-Annual (6 months)</option>
+                                        <option value="12">Annual (12 months)</option>
+                                    </select>
+                                    <span asp-validation-for="Bulan" class="text-danger"></span>
+                                    <small class="form-text text-muted">
+                                        0 = Custom interval, 1-12 = Regular monthly intervals
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        Preview Description
+                                    </label>
+                                    <div class="preview-box">
+                                        <div id="descriptionPreview" class="description-preview">
+                                            <i class="bi bi-clock me-2"></i>
+                                            <span class="preview-text">Select an interval to see description</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interval Guide -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-lightbulb-fill me-3 mt-1"></i>
+                                        <div>
+                                            <strong>Interval Guidelines:</strong>
+                                            <div class="mt-2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6 class="text-primary">Regular Intervals:</h6>
+                                                        <ul class="mb-0">
+                                                            <li><strong>Monthly (1):</strong> High-risk equipment</li>
+                                                            <li><strong>Quarterly (3):</strong> Standard equipment</li>
+                                                            <li><strong>Semi-Annual (6):</strong> Low-risk equipment</li>
+                                                            <li><strong>Annual (12):</strong> Compliance checks</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6 class="text-warning">Custom Interval (0):</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Event-based inspections</li>
+                                                            <li>Conditional maintenance</li>
+                                                            <li>Special project assignments</li>
+                                                            <li>Flexible scheduling needs</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Usage Examples -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card bg-light">
+                                    <div class="card-header bg-transparent">
+                                        <h6 class="mb-0">
+                                            <i class="bi bi-collection me-2"></i>
+                                            Example Intervals
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="example-interval">
+                                                    <div class="example-badge bg-success">1M</div>
+                                                    <div class="example-name">Fire Safety Monthly</div>
+                                                    <div class="example-desc">Critical equipment checks</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="example-interval">
+                                                    <div class="example-badge bg-primary">3M</div>
+                                                    <div class="example-name">Standard Quarterly</div>
+                                                    <div class="example-desc">Regular maintenance</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="example-interval">
+                                                    <div class="example-badge bg-info">6M</div>
+                                                    <div class="example-name">Equipment Review</div>
+                                                    <div class="example-desc">Semi-annual inspection</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="example-interval">
+                                                    <div class="example-badge bg-warning">0</div>
+                                                    <div class="example-name">Custom Schedule</div>
+                                                    <div class="example-desc">Flexible timing</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-save me-2"></i>Create Interval
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bulanSelect = document.getElementById('bulanSelect');
+            const descriptionPreview = document.getElementById('descriptionPreview');
+            
+            bulanSelect.addEventListener('change', function() {
+                updatePreview(this.value);
+            });
+            
+            function updatePreview(bulan) {
+                const preview = document.querySelector('.preview-text');
+                const icon = descriptionPreview.querySelector('i');
+                
+                if (!bulan) {
+                    preview.textContent = 'Select an interval to see description';
+                    icon.className = 'bi bi-clock me-2';
+                    return;
+                }
+                
+                const bulanInt = parseInt(bulan);
+                let description, iconClass;
+                
+                if (bulanInt === 0) {
+                    description = 'Interval Khusus - Flexible scheduling';
+                    iconClass = 'bi bi-gear me-2 text-warning';
+                } else {
+                    description = `Setiap ${bulanInt} bulan - Regular inspection`;
+                    iconClass = 'bi bi-calendar-check me-2 text-success';
+                }
+                
+                preview.textContent = description;
+                icon.className = iconClass;
+                
+                // Add animation
+                descriptionPreview.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    descriptionPreview.style.transform = 'scale(1)';
+                }, 100);
+            }
+        });
+    </script>
+}
+
+<style>
+    .preview-box {
+        background: var(--gray-50);
+        border: 2px dashed var(--gray-300);
+        border-radius: var(--radius-lg);
+        padding: 1rem;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .description-preview {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        color: var(--gray-700);
+        transition: var(--transition);
+    }
+    
+    .example-interval {
+        text-align: center;
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        background: white;
+        border: 1px solid var(--gray-200);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+    
+    .example-interval:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+    }
+    
+    .example-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.5rem auto;
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+    
+    .example-name {
+        font-weight: 600;
+        color: var(--gray-900);
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .example-desc {
+        font-size: 0.75rem;
+        color: var(--gray-500);
+    }
+    
+    .form-control-lg, .form-select-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border-radius: var(--radius-md);
+        border: 2px solid var(--gray-300);
+        transition: var(--transition);
+    }
+    
+    .form-control-lg:focus, .form-select-lg:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(213, 0, 0, 0.25);
+    }
+    
+    .alert-modern {
+        border: none;
+        border-radius: var(--radius-lg);
+        padding: 1rem 1.25rem;
+    }
+</style>

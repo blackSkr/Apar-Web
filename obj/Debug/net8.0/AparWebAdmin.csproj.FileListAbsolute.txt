@@ -45,3 +45,4 @@ D:\AparWebAdmin\obj\Debug\net8.0\refint\AparWebAdmin.dll
 D:\AparWebAdmin\obj\Debug\net8.0\AparWebAdmin.pdb
 D:\AparWebAdmin\obj\Debug\net8.0\AparWebAdmin.genruntimeconfig.cache
 D:\AparWebAdmin\obj\Debug\net8.0\ref\AparWebAdmin.dll
+D:\AparWebAdmin\obj\Debug\net8.0\AparWebAdmin.sourcelink.json
