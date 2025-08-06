@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,20 +16,25 @@
         :root {
             --bs-primary: #D50000;
         }
+
         .navbar-brand {
             font-weight: bold;
         }
+
         .navbar .nav-link {
             transition: color 0.2s ease-in-out;
         }
+
         .navbar .nav-link:hover {
             color: #ffcccc !important;
         }
+
         footer {
             font-size: 0.875rem;
         }
     </style>
 </head>
+
 <body class="d-flex flex-column min-vh-100 bg-light text-dark">
 
     <!-- Navbar -->
@@ -54,17 +60,25 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-controller="Lokasi" asp-action="Index">Lokasi</a></li>
-                                <li><a class="dropdown-item" asp-controller="JenisPeralatan" asp-action="Index">Jenis Peralatan</a></li>
-                                <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">Petugas</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" asp-controller="Peralatan" asp-action="Index">🛠 Peralatan</a></li>
-                                <li><a class="dropdown-item" asp-controller="Checklist" asp-action="Index">📋 Checklist Management</a></li>
-                                        <li><a class="dropdown-item" asp-controller="IntervalPetugas" asp-action="Index">
-                                    <i class="bi bi-clock-history me-2 text-warning"></i>Staff Intervals
-                                </a></li>
+                                <li><a class="dropdown-item" asp-controller="JenisPeralatan" asp-action="Index">Jenis
+                                        Peralatan</a></li>
+                                <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">Petugas</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" asp-controller="Peralatan" asp-action="Index">🛠
+                                        Peralatan</a></li>
+                                <li><a class="dropdown-item" asp-controller="Checklist" asp-action="Index">📋 Checklist
+                                        Management</a></li>
+                                <li><a class="dropdown-item" asp-controller="Maintenance" asp-action="Index">🔧
+                                        Maintenance</a></li>
+                                <li><a class="dropdown-item" asp-controller="IntervalPetugas" asp-action="Index">
+                                        <i class="bi bi-clock-history me-2 text-warning"></i>Staff Intervals
+                                    </a></li>
                                 <li><a class="dropdown-item" asp-controller="Petugas" asp-action="Index">
-                                    <i class="bi bi-people me-2 text-success"></i>Staff
-                                </a></li>
+                                        <i class="bi bi-people me-2 text-success"></i>Staff
+                                    </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -94,4 +108,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

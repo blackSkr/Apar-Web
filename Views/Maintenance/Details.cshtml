@@ -1,0 +1,112 @@
+@model AparWebAdmin.Models.Maintenance
+@{
+    ViewData["Title"] = "Detail Maintenance";
+}
+
+<div class="container mt-4">
+    <h1>DEBUG VIEW LOADED</h1>
+
+    <h2 class="mb-4">Detail Pemeriksaan APAR</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Kode APAR</dt>
+                <dd class="col-sm-8">@Model.AparKode</dd>
+
+                <dt class="col-sm-4">Lokasi</dt>
+                <dd class="col-sm-8">@Model.LokasiNama</dd>
+
+                <dt class="col-sm-4">Jenis</dt>
+                <dd class="col-sm-8">@Model.JenisNama</dd>
+
+                <dt class="col-sm-4">Spesifikasi</dt>
+                <dd class="col-sm-8">@Model.Spesifikasi</dd>
+
+                <dt class="col-sm-4">Tanggal Pemeriksaan</dt>
+                <dd class="col-sm-8">@Model.TanggalPemeriksaan.ToString("dd MMM yyyy")</dd>
+
+                <dt class="col-sm-4">Petugas</dt>
+                <dd class="col-sm-8">@Model.BadgeNumber (@Model.PetugasRole)</dd>
+
+                <dt class="col-sm-4">Interval Pemeriksaan</dt>
+                <dd class="col-sm-8">@Model.NamaInterval (@Model.IntervalHari hari)</dd>
+
+                <dt class="col-sm-4">Kondisi</dt>
+                <dd class="col-sm-8">
+                    <span class="badge bg-@Model.KondisiBadge">@Model.Kondisi</span>
+                </dd>
+
+                <dt class="col-sm-4">Tekanan</dt>
+                <dd class="col-sm-8">@Model.Tekanan</dd>
+
+                <dt class="col-sm-4">Jumlah Masalah</dt>
+                <dd class="col-sm-8">@Model.JumlahMasalah</dd>
+
+                <dt class="col-sm-4">Catatan Masalah</dt>
+                <dd class="col-sm-8">@Model.CatatanMasalah</dd>
+
+                <dt class="col-sm-4">Rekomendasi</dt>
+                <dd class="col-sm-8">@Model.Rekomendasi</dd>
+
+                <dt class="col-sm-4">Tindak Lanjut</dt>
+                <dd class="col-sm-8">@Model.TindakLanjut</dd>
+            </dl>
+        </div>
+    </div>
+
+    @if (Model.Checklist?.Any() == true)
+    {
+        <h4 class="mt-4">Checklist Pemeriksaan</h4>
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Pertanyaan</th>
+                    <th>Status</th>
+                    <th>Alasan / Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Checklist)
+                {
+                    <tr>
+                        <td>@item.PertanyaanChecklist</td>
+                        <td>
+                            <span class="badge bg-@item.StatusBadge">
+                                <i class="@item.StatusIcon"></i> @item.Status
+                            </span>
+                        </td>
+                        <td>
+                            <div>@item.Alasan</div>
+                            <div class="text-muted small">@item.Keterangan</div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (Model.Photos?.Any() == true)
+    {
+        <h4 class="mt-5">Dokumentasi Foto</h4>
+        <div class="row">
+            @foreach (var foto in Model.Photos)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="@Url.Content("~/" + foto.FotoPath)" class="card-img-top img-fluid" alt="Foto Pemeriksaan" />
+                        <div class="card-body p-2">
+                            <small class="text-muted">
+                                @foto.UploadedAt.ToString("dd MMM yyyy HH:mm")
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <a asp-action="Index" asp-route-id="@Model.PeralatanId" class="btn btn-secondary mt-4">
+        &larr; Kembali
+    </a>
+</div>

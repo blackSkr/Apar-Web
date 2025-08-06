@@ -1,0 +1,51 @@
+@model AparWebAdmin.Models.Maintenance
+@{
+    ViewData["Title"] = "Tambah Maintenance";
+}
+
+<h2>Tambah Maintenance</h2>
+
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="mb-3">
+        <label asp-for="PeralatanId" class="form-label">Pilih APAR</label>
+        <select asp-for="PeralatanId" class="form-control" asp-items="ViewBag.PeralatanList"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="BadgeNumber" class="form-label">Badge Petugas</label>
+        <input asp-for="BadgeNumber" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="TanggalPemeriksaan" class="form-label">Tanggal Pemeriksaan</label>
+        <input asp-for="TanggalPemeriksaan" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Kondisi" class="form-label">Kondisi</label>
+        <select asp-for="Kondisi" class="form-control">
+            <option>Baik</option>
+            <option>Perlu Perbaikan</option>
+            <option>Rusak</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Tekanan" class="form-label">Tekanan</label>
+        <input asp-for="Tekanan" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CatatanMasalah" class="form-label">Catatan Masalah</label>
+        <textarea asp-for="CatatanMasalah" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Rekomendasi" class="form-label">Rekomendasi</label>
+        <textarea asp-for="Rekomendasi" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TindakLanjut" class="form-label">Tindak Lanjut</label>
+        <textarea asp-for="TindakLanjut" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="fotos" class="form-label">Upload Foto (Max 5MB per foto)</label>
+        <input type="file" name="fotos" multiple class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a asp-action="Index" class="btn btn-secondary">Batal</a>
+</form>

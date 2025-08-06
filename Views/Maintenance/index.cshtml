@@ -1,0 +1,57 @@
+@model IEnumerable<AparWebAdmin.Models.Maintenance>
+@{
+    ViewData["Title"] = "Maintenance List";
+}
+
+<h2>Maintenance List</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tambah Maintenance</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>APAR</th>
+            <th>Lokasi</th>
+            <th>Jenis</th>
+            <th>Petugas</th>
+            <th>Tanggal</th>
+            <th>Kondisi</th>
+            <th>Tekanan</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int no = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@no++</td>
+                    <td>@item.AparKode</td>
+                    <td>@item.LokasiNama</td>
+                    <td>@item.JenisNama</td>
+                    <td>@item.BadgeNumber</td>
+                    <td>@item.TanggalPemeriksaan.ToString("dd/MM/yyyy")</td>
+                    <td><span class="badge bg-@item.KondisiBadge">@item.Kondisi</span></td>
+                    <td>@item.Tekanan</td>
+                    <td><span class="badge bg-@item.StatusBadge">@item.StatusText</span></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detail</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10" class="text-center">Data kosong</td>
+            </tr>
+        }
+    </tbody>
+</table>
